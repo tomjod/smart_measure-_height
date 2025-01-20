@@ -29,6 +29,14 @@ Este proyecto es un medidor de altura inteligente que utiliza un sensor ultrasó
   - SDA: Pin 11 (MOSI)
   - SCL: Pin 13 (SCK)
 
+## Bibliotecas Requeridas
+- NewPing
+- Adafruit_ST7789
+- Adafruit_GFX
+- WiFiEsp
+
+
+
 ## Configuración
 El dispositivo puede ser configurado ajustando las siguientes variables:
 - `distance_from_floor`: Distancia desde el piso en cm (por defecto 200 cm)
