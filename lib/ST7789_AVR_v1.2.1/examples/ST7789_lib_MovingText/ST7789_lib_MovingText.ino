@@ -54,8 +54,8 @@ ST7789 240x320 2.0" IPS - only 4+2 wires required:
 #define TFT_CS  -1 // without CS
 #define TFT_RST  9 // without CS
 
-#define SCR_WD 240
-#define SCR_HT 240
+#define SCR_WD 170
+#define SCR_HT 320
 ST7789_AVR lcd = ST7789_AVR(TFT_DC, TFT_RST, TFT_CS);
 
 #include "RREFont.h"
@@ -69,10 +69,12 @@ void customRect(int x, int y, int w, int h, int c) { return lcd.fillRect(x, y, w
 void setup() 
 {
   Serial.begin(9600);
-  lcd.init();
+  lcd.init(SCR_WD, SCR_HT);
   lcd.fillScreen(BLACK);
 
   font.init(customRect, SCR_WD, SCR_HT); // custom fillRect function and screen width and height values
+  lcd.fillScreen(BLACK);
+
   font.setFont(&rre_chicago_20x24);
   int i;
   for(i=0;i<10;i++) {

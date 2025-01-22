@@ -18,8 +18,8 @@
 #include <Adafruit_GFX.h>
 //#include <avr/pgmspace.h>
 
-#define ST7789_TFTWIDTH 	240
-#define ST7789_TFTHEIGHT 	240
+#define ST7789_TFTWIDTH 	170
+#define ST7789_TFTHEIGHT 	320
 
 // Color definitions
 
