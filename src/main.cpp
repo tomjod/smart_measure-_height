@@ -8,7 +8,7 @@
 
 int distance_from_floor = 200; // Distance from the floor in cm
 int iterations = 10; // Number of iterations for median filter
-int last_height_reading = 0; // Last distance reading
+unsigned int last_height_reading = 0; // Last distance reading
 int tolerance = 1; // Tolerance for displaying height
 
 #define TRIGGER_PIN  2 // Trigger pin for ultrasonic sensor
@@ -40,8 +40,9 @@ NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 void display_reading(String text);
 void display_welcome_message();
-
-
+void display_out_of_range();
+void echoCheck();
+void oneSensorCycle();
 
 bool displayNeedsUpdate = true;  // Flag para controlar actualizaciones de pantalla
 bool first_reading = true;
@@ -76,8 +77,6 @@ void setup() {
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
-
   // Actualizar lectura del sensor
    for (uint8_t i = 0; i < ITERATIONS; i++) { // Loop through all the iterations.
     if (millis() >= pingTimer[i]) {          // Is it this iteration's time to ping?
@@ -89,7 +88,6 @@ void loop() {
       sonar.ping_timer(echoCheck); // Do the ping (processing continues, interrupt will call echoCheck to look for echo).
     }
   }
-  
 }
 
 void echoCheck() { // If ping received, set the sensor distance to array.
@@ -197,8 +195,8 @@ void display_welcome_message() {
   font.setFont(&rre_chicago_20x24);
   
   // Calculate width for both texts
-  int16_t w1 = font.strWidth("Telemedicina");
-  int16_t w2 = font.strWidth("Quantum");
+  int16_t w1 = font.strWidth((char*) "Telemedicina");
+  int16_t w2 = font.strWidth((char*) "Quantum");
   
   // Center horizontally
   int x1 = (SCR_WD - w1) / 2;
@@ -211,14 +209,13 @@ void display_welcome_message() {
   uint16_t quantumColor = RGBto565(77, 198, 162);  // #4DC6A2 in hex
   uint16_t quantumColor2 = RGBto565(255, 255, 255);  // #4DC6A2 in hex
 
-  int i;
   font.setColor(quantumColor2);
-  font.printStr(x1+i,y+i,"Telemedicina");
+  font.printStr(x1,y,(char*) "Telemedicina");
   
   y = y + 40;
   
   font.setColor(quantumColor);
-  font.printStr(x2+i,y+i, "Quantum");
+  font.printStr(x2, y, (char*) "Quantum");
   
   delay(WELCOME_DURATION);
 }
@@ -232,9 +229,9 @@ void display_out_of_range() {
     font.setScale(1, 1);
     
     // Mensajes a mostrar
-    char* msg1 = "Por favor";
-    char* msg2 = "coloquese debajo";
-    char* msg3 = "del sensor";
+    char* msg1 =  (char*) "Por favor";
+    char* msg2 =  (char*) "coloquese debajo";
+    char* msg3 =  (char*) "del sensor";
     
     // Calcular posiciones para centrar
     int16_t y = SCR_HT / 4;
