@@ -4,14 +4,14 @@
 #include <ST7789_AVR.h> // ST7789 library
 
 
-int distance_from_floor = 200; // Distance from the floor in cm
+int distance_from_floor = 210; // Distance from the floor in cm
 int iterations = 10; // Number of iterations for median filter
 int last_height_reading = 0; // Last distance reading
 int tolerance = 2; // Tolerance for displaying height
 
 #define TRIGGER_PIN  2 // Trigger pin for ultrasonic sensor
 #define ECHO_PIN     3 // Echo pin for ultrasonic sensor
-#define MAX_DISTANCE 200 // Maximum distance to measure
+#define MAX_DISTANCE 210 // Maximum distance to measure
 
 // The other display pins (SDA and SCL) 
 // are connected to Arduino hardware SPI pins (digital pin 11 and digital pin 13).
